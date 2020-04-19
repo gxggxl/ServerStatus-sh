@@ -5,10 +5,10 @@
 
 # 目录介绍：
 
-* autodeploy    自动部署.
+* autodeploy    自动部署
 * clients       客户端文件
 * server        服务端文件
-* web           网站文件  
+* web           网站文件
 
 # 更新说明：
 
@@ -59,8 +59,9 @@ make
 如果没错误提示，OK，ctrl+c关闭；如果有错误提示，检查35601端口是否被占用    
 
 二、修改配置文件         
-修改config.json文件，注意username, password的值需要和客户端对应一致                 
-```
+修改config.json文件，注意username, password的值需要和客户端对应一致  
+               
+```json
 {"servers":
 	[
 		{
@@ -77,13 +78,15 @@ make
 
 三、拷贝ServerStatus/status到你的网站目录        
 例如：
-```
+
+```bash
 sudo cp -r ServerStatus/web/* /home/wwwroot/default
 ```
 
 四、运行服务端：             
-web-dir参数为上一步设置的网站根目录，务必修改成自己网站的路径   
-```
+web-dir参数为上一步设置的网站根目录，务必修改成自己网站的路径  
+
+```bash
 ./sergate --config=config.json --web-dir=/home/wwwroot/default   
 ```
 
@@ -98,19 +101,12 @@ web-dir参数为上一步设置的网站根目录，务必修改成自己网站�
 1、安装psutil跨平台依赖库      
 2、vim client-psutil.py, 修改SERVER地址，username帐号， password密码       
 3、python client-psutil.py 运行即可。           
-```
-### for Centos：
-sudo yum -y install epel-release
-sudo yum -y install python-pip
-sudo yum clean all
-sudo yum -y install gcc
-sudo yum -y install python-devel
-sudo pip install psutil
+```bash
+### for Centos： 
+yum -y install epel-release && yum -y install python-pip && yum clean all && yum -y install gcc && yum -y install python-devel && pip install psutil
 ### for Ubuntu/Debian:
 sudo root
-apt-get -y install python-setuptools python-dev build-essential
-apt-get -y install python-pip
-pip install psutil
+apt-get -y install python-setuptools python-dev build-essential && apt-get -y install python-pip && pip install psutil
 ### for Windows:
 打开网址：https://pypi.python.org/pypi?:action=display&name=psutil#downloads
 下载psutil for windows程序包
