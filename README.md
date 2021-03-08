@@ -77,7 +77,7 @@ make
 			"host": "GenericServerHost123",
 			"location": "Austria",
 			"password": "some-hard-to-guess-copy-paste-password"
-		},
+		}
 	]
 }       
 ```
@@ -103,16 +103,28 @@ web-dir参数为上一步设置的网站根目录，务必修改成自己网站�
 1、vim client-linux.py, 修改SERVER地址，username帐号， password密码        
 2、python client-linux.py 运行即可。      
 
-二、client-psutil版配置:                
+二、client\-psutil版配置:                
 1、安装psutil跨平台依赖库      
-2、vim client-psutil.py, 修改SERVER地址，username帐号， password密码       
-3、python client-psutil.py 运行即可。           
+2、vim client\-psutil.py, 修改SERVER地址，username帐号， password密码       
+3、python client\-psutil.py 运行即可。
+
 ```bash
 ### for Centos： 
-yum -y install epel-release && yum -y install python-pip && yum clean all && yum -y install gcc && yum -y install python-devel && pip install psutil
+yum -y install epel-release python-pip
+# 清除缓存目录(/var/cache/yum)下的软件包及旧的headers
+# yum clean all
+yum -y install gcc python-devel
+pip install psutil
+```
+
+```bash
 ### for Ubuntu/Debian:
 sudo root
-apt-get -y install python-setuptools python-dev build-essential && apt-get -y install python-pip && pip install psutil
+apt-get -y install python-setuptools python-dev build-essential python-pip 
+pip install psutil
+```
+
+```
 ### for Windows:
 打开网址：https://pypi.python.org/pypi?:action=display&name=psutil#downloads
 下载psutil for windows程序包
