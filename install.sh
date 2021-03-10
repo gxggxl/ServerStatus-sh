@@ -86,7 +86,7 @@ install_client() {
 @reboot root /root/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
 EOF
-
+/root/client-linux.py
 }
 
 # 卸载服务端
