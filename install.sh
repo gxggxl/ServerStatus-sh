@@ -41,7 +41,7 @@ install_server() {
 #  install_u
   git clone https://github.com/gxggxl/ServerStatus-sh.git ServerStatus
 
-  cp -r root/ServerStatus/web/* /www/wwwroot/info.gxusb.com
+  cp -rf root/ServerStatus/web/* /www/wwwroot/info.gxusb.com
 
   cd ServerStatus/server || exit
   make
