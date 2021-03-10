@@ -48,7 +48,7 @@ install_server() {
   ./sergate
 
   #运行服务端
-  ./sergate --config=config.json --web-dir=/home/wwwroot/default
+  ./sergate --config=config.json --web-dir=/www/wwwroot/info_gxusb_com
 
   path=$(
     cd "$(dirname "$0")" || exit
@@ -80,7 +80,7 @@ install_client() {
   read -p "请输入服务端IP地址:" server
   # shellcheck disable=SC2162
   read -p "请输入用户名:" user
-  cat <<EOF >>crontab.sh
+  cat <<EOF >>/etc/crontab
 
 #ServerStatus-client Start
 @reboot root /root/client-linux.py SERVER=$server USER=$user
