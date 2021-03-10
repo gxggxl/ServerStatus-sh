@@ -89,7 +89,6 @@ EOF
 uninstall_server() {
   cp /etc/crontab crontab.backup
   sed '/^#ServerStatus-server/,/^#ServerStatus-server End/d' crontab.backup >/etc/crontab
-
   red "正在删除服务端网站文件..."
   rm -rfv /home/wwwroot/default/*
   green "网站文件已删除"
@@ -99,7 +98,6 @@ uninstall_server() {
 uninstall_client() {
   cp /etc/crontab crontab.backup
   sed '/^#ServerStatus-client/,/^#ServerStatus-client End/d' crontab.backup >/etc/crontab
-
   red "正在删除客户端文件..."
   rm -rfv /root/ServerStatus
   green "客户端文件已删除"
@@ -116,7 +114,7 @@ $(tyblue " 1)安装服务端")
 $(tyblue " 2)安装客户端")
 $(red " 3)卸载服户端")
 $(red " 4)卸载客户端")
-$(purple " 5)退出")
+$(yellow " 5)退出")
 EOF
   # shellcheck disable=SC2162
   read -p "请输入对应选项的数字：" numa
