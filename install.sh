@@ -23,6 +23,15 @@ blue() { #蓝色
 
 #red $(command -v python)
 
+#检查账户权限
+check_root() {
+    if [ 0 == $UID ]; then
+        echo -e "当前用户是 ROOT 用户，可以继续操作" && sleep 1
+    else
+        echo -e "当前非 ROOT 账号(或没有 ROOT 权限)，无法继续操作，请更换 ROOT 账号或使用 su命令获取临时 ROOT 权限" && exit 1
+    fi
+}
+
 # 安装环境
 install_u() {
   green "安装环境..."
