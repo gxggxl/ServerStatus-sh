@@ -45,7 +45,7 @@ install_server() {
 
   cd ServerStatus/server || exit
   make
-  ./sergate && exit
+  ./sergate
 
   #运行服务端
   ./sergate --config=config.json --web-dir=/www/wwwroot/info.gxusb.com
@@ -75,9 +75,9 @@ install_client() {
   wget -P /root/ServerStatus https://raw.githubusercontent.com/gxggxl/ServerStatus-sh/master/clients/client-linux.py
   chmod 755 /root/ServerStatus/client-linux.py
   # shellcheck disable=SC2162
-  read -pe "请输入服务端IP地址:" server
+  read -e -p "请输入服务端IP地址:" server
   # shellcheck disable=SC2162
-  read -pe "请输入用户名:" user
+  read -e -p "请输入用户名:" user
   cat <<EOF >>/etc/crontab
 
 #ServerStatus-client Start
