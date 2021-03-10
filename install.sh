@@ -26,14 +26,10 @@ blue() { #蓝色
 # 安装环境
 install_u() {
   green "安装环境..."
-  echo 'install epel-release...'
-  yum -y epel-release
-  echo 'install python-pip...'
-  yum -y python-pip
-  echo 'install gcc...'
-  yum -y gcc
-  echo 'install python-devel...'
-  yum -y python-devel
+  yum -y install epel-release
+  yum -y install python-pip
+  yum -y install gcc
+  yum -y install python-devel
   green "环境安装成功"
 }
 
