@@ -38,10 +38,10 @@ install_u() {
 
 # 安装服务端
 install_server() {
-  install_u
+#  install_u
   git clone https://github.com/gxggxl/ServerStatus-sh.git ServerStatus
 
-  cp -r ServerStatus/web/* /home/wwwroot/default
+  cp -r root/ServerStatus/web/* /www/wwwroot/info_gxusb_com
 
   cd ServerStatus/server || exit
   make
@@ -55,7 +55,7 @@ install_server() {
     pwd
   )
   green "将ServerStatus服务端，添加到crontab任务列表..."
-  cat <<EOF >>crontab.sh
+  cat <<EOF >>/etc/crontab
 
 #ServerStatus-server Start
 @reboot root $path/sergate --config=$path/config.json --web-dir=/home/wwwroot/default
