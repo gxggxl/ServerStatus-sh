@@ -32,6 +32,27 @@ check_root() {
     fi
 }
 
+#检查系统
+check_sys() {
+    if [[ -f /etc/redhat-release ]]; then
+        release="centos"
+    elif [ ${IS_MACOS} -eq 1 ]; then
+        release="macos"
+    elif cat /etc/issue | grep -q -E -i "debian"; then
+        release="debian"
+    elif cat /etc/issue | grep -q -E -i "ubuntu"; then
+        release="ubuntu"
+    elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
+        release="centos"
+    elif cat /proc/version | grep -q -E -i "debian"; then
+        release="debian"
+    elif cat /proc/version | grep -q -E -i "ubuntu"; then
+        release="ubuntu"
+    elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
+        release="centos"
+    fi
+}
+
 # 安装环境
 install_u() {
   green "安装环境..."
@@ -156,4 +177,5 @@ EOF
   esac
 }
 
+check_sys
 menu
