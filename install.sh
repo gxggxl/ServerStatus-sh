@@ -41,14 +41,14 @@ install_server() {
 #  install_u
   git clone https://github.com/gxggxl/ServerStatus-sh.git ServerStatus
 
-  cp -r root/ServerStatus/web/* /www/wwwroot/info_gxusb_com
+  cp -r root/ServerStatus/web/* /www/wwwroot/info.gxusb.com
 
   cd ServerStatus/server || exit
   make
   ./sergate
 
   #运行服务端
-  ./sergate --config=config.json --web-dir=/www/wwwroot/info_gxusb_com
+  ./sergate --config=config.json --web-dir=/www/wwwroot/info.gxusb.com
 
   path=$(
     cd "$(dirname "$0")" || exit
@@ -58,7 +58,7 @@ install_server() {
   cat <<EOF >>/etc/crontab
 
 #ServerStatus-server Start
-@reboot root $path/sergate --config=$path/config.json --web-dir=/home/wwwroot/default
+@reboot root $path/sergate --config=$path/config.json --web-dir=/www/wwwroot/info.gxusb.com
 #ServerStatus-server End
 EOF
 
