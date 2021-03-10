@@ -54,7 +54,6 @@ install_server() {
   path=$(cd "$(dirname "$0")" || exit pwd)
   green "将ServerStatus服务端，添加到crontab任务列表..."
   cat <<EOF >>/etc/crontab
-
 #ServerStatus-server Start
 @reboot root $path/sergate --config=$path/config.json --web-dir=/www/wwwroot/info.gxusb.com
 #ServerStatus-server End
@@ -79,7 +78,6 @@ install_client() {
   # shellcheck disable=SC2162
   read -e -p "请输入用户名:" user
   cat <<EOF >>/etc/crontab
-
 #ServerStatus-client Start
 @reboot root /root/ServerStatus/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
