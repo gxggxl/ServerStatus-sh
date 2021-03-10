@@ -39,7 +39,7 @@ install_u() {
 # 安装服务端
 install_server() {
   install_u
-  wget https://github.com/gxggxl/ServerStatus-sh.git
+  git clone https://github.com/gxggxl/ServerStatus-sh.git ServerStatus
 
   cp -r ServerStatus/web/* /home/wwwroot/default
 
