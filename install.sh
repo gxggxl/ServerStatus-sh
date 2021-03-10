@@ -39,8 +39,8 @@ install_u() {
 # 安装服务端
 install_server() {
 #  install_u
-  git clone https://github.com/gxggxl/ServerStatus-sh.git ServerStatus
-
+#  git clone https://github.com/gxggxl/ServerStatus-sh.git ServerStatus
+  git clone https://gitee.com/gxggxl/ServerStatus-sh.git ServerStatus
   cp -rf root/ServerStatus/web/* /www/wwwroot/info.gxusb.com
 
   cd ServerStatus/server || exit
@@ -50,10 +50,8 @@ install_server() {
   #运行服务端
   ./sergate --config=config.json --web-dir=/www/wwwroot/info.gxusb.com
 
-  path=$(
-    cd "$(dirname "$0")" || exit
-    pwd
-  )
+  # shellcheck disable=SC2242
+  path=$(cd "$(dirname "$0")" || exit pwd)
   green "将ServerStatus服务端，添加到crontab任务列表..."
   cat <<EOF >>/etc/crontab
 
