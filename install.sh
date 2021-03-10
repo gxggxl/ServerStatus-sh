@@ -65,7 +65,7 @@ EOF
   green "服务端安装成功"
   yellow "安装服务端时，默认安装客户端"
   printf "默认安装:y/n:"
-  read cccc
+  read -e cccc
   if [[ $cccc == "y" ]] || [[ $cccc == "" ]]; then
     install_client
   fi
@@ -77,25 +77,22 @@ install_client() {
   wget -P /root/ServerStatus https://raw.githubusercontent.com/gxggxl/ServerStatus-sh/master/clients/client-linux.py
   chmod 755 /root/ServerStatus/client-linux.py
   # shellcheck disable=SC2162
-  read -p "请输入服务端IP地址:" server
+  read -pe "请输入服务端IP地址:" server
   # shellcheck disable=SC2162
-  read -p "请输入用户名:" user
+  read -pe "请输入用户名:" user
   cat <<EOF >>/etc/crontab
 
 #ServerStatus-client Start
 @reboot root /root/ServerStatus/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
 EOF
-/root/ServerStatus/client-linux.py
+/root/ServerStatus/client-linux.py SERVER=$server USER=$user
 }
 
 # 卸载服务端
 uninstall_server() {
   cp /etc/crontab crontab.backup
   sed '/^#ServerStatus-server/,/^#ServerStatus-server End/d' crontab.backup >/etc/crontab
-  #测试
-  #  cp crontab crontab.backup
-  #  sed '/^#ServerStatus-server/,/^#ServerStatus-server End/d' crontab.backup >crontab
 
   red "正在删除服务端网站文件..."
   rm -rfv /home/wwwroot/default/*
@@ -106,9 +103,6 @@ uninstall_server() {
 uninstall_client() {
   cp /etc/crontab crontab.backup
   sed '/^#ServerStatus-client/,/^#ServerStatus-client End/d' crontab.backup >/etc/crontab
-  #测试
-  #  cp crontab crontab.backup
-  #  sed '/^#ServerStatus-client/,/^#ServerStatus-client End/d' crontab.backup >crontab
 
   red "正在删除客户端文件..."
   rm -rfv /root/ServerStatus
