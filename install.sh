@@ -1,5 +1,5 @@
-+#!/bin/bash
-#PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+#!/bin/bash
+
 # 功能性函数：
 # 定义几个颜色
 purple() { #基佬紫
@@ -42,7 +42,6 @@ install_server() {
 #  git clone https://github.com/gxggxl/ServerStatus-sh.git ServerStatus
   git clone https://gitee.com/gxggxl/ServerStatus-sh.git ServerStatus
   cp -rf root/ServerStatus/web/* /www/wwwroot/info.gxusb.com
-
   cd ServerStatus/server || exit
   make
   ./sergate
@@ -65,6 +64,8 @@ EOF
   read -e cccc
   if [[ $cccc == "y" ]] || [[ $cccc == "" ]]; then
     install_client
+    else
+      exit
   fi
   exit
 }
@@ -107,7 +108,7 @@ function menu() {
   #  clear
   cat <<EOF
 ---------------------------------------------
-|**********   $(blue "ServerStatus-sh")   ************|
+|**********   $(green "ServerStatus-sh")   ************|
 | https://github.com/gxggxl/ServerStatus-sh |
 ---------------------------------------------
 $(tyblue " 1)安装服务端")
