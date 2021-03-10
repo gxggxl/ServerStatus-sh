@@ -45,7 +45,7 @@ install_server() {
 
   cd ServerStatus/server || exit
   make
-  ./sergate
+  ./sergate && exit
 
   #运行服务端
   ./sergate --config=config.json --web-dir=/www/wwwroot/info.gxusb.com
@@ -83,10 +83,10 @@ install_client() {
   cat <<EOF >>/etc/crontab
 
 #ServerStatus-client Start
-@reboot root /root/client-linux.py SERVER=$server USER=$user
+@reboot root /root/ServerStatus/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
 EOF
-/root/client-linux.py
+/root/ServerStatus/client-linux.py
 }
 
 # 卸载服务端
