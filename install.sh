@@ -1,4 +1,6 @@
 #!/bin/bash
+#获取路径
+#path=$(cd "$(dirname "$0")" || exit pwd)
 
 # 功能性函数：
 # 定义几个颜色
@@ -77,13 +79,12 @@ check_gcc_installed_status() {
 check_pip_installed_status() {
   if [ -z $(command -v pip) ]; then
     echo -e "python-pip 依赖没有安装，开始安装..."
-    check_root
     if [[ ${release} == "centos" ]]; then
-      yum update && yum install python-pip -y
+      yum install python-pip -y
     elif [[ ${release} == "macos" ]]; then
       brew install python-pip
     else
-      apt-get update && apt-get install python-pip -y
+      apt-get install python-pip -y
     fi
     if [ -z $(command -v pip) ]; then
       echo -e "python-pip 依赖安装失败，请检查！" && exit 1
@@ -97,7 +98,6 @@ check_pip_installed_status() {
 check_python_psutil_installed_status() {
   if [ -z $(pip list | grep -o 'psutil') ]; then
     echo -e "python psutil 模块没有安装，开始安装..."
-    check_root
     pip install psutil
     if [ -z $(pip list | grep -o 'psutil') ]; then
       echo -e "python psutil 依赖安装失败，请检查！" && exit 1
@@ -114,9 +114,6 @@ install_u() {
   yum -y install python-devel
   green "环境安装成功"
 }
-
-#获取路径
-#path=$(cd "$(dirname "$0")" || exit pwd)
 
 # 安装服务端
 install_server() {
@@ -165,7 +162,7 @@ install_client() {
 @reboot root /root/ServerStatus/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
 EOF
-  /root/ServerStatus/client-linux.py SERVER=$server USER=$user
+  #  /root/ServerStatus/client-linux.py SERVER=$server USER=$user
 }
 
 # 卸载服务端
