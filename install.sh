@@ -53,13 +53,68 @@ check_sys() {
     fi
 }
 
+#检查 gcc 依赖
+check_gcc_installed_status() {
+    if [ -z $(command -v gcc) ]; then
+        echo -e "gcc 依赖没有安装，开始安装..."
+        check_root
+        if [[ ${release} == "centos" ]]; then
+            yum update && yum install gcc -y
+        elif [[ ${release} == "macos" ]]; then
+            brew install gcc
+        else
+            apt-get update && apt-get install gcc -y
+        fi
+        if [ -z $(command -v gcc) ]; then
+            echo -e "gcc 依赖安装失败，请检查！" && exit 1
+        else
+            echo -e "gcc 依赖安装成功！"
+        fi
+    fi
+}
+
+#检查 python-pip 依赖
+check_pip_installed_status() {
+    if [ -z $(command -v pip) ]; then
+        echo -e "python-pip 依赖没有安装，开始安装..."
+        check_root
+        if [[ ${release} == "centos" ]]; then
+            yum update && yum install python-pip -y
+        elif [[ ${release} == "macos" ]]; then
+            brew install python-pip
+        else
+            apt-get update && apt-get install python-pip -y
+        fi
+        if [ -z $(command -v pip) ]; then
+            echo -e "python-pip 依赖安装失败，请检查！" && exit 1
+        else
+            echo -e "python-pip 依赖安装成功！"
+        fi
+    fi
+}
+
+#检查 python psutil 模块
+check_python_psutil_installed_status() {
+    if [ -z $(pip list | grep -o 'psutil') ]; then
+        echo -e "python psutil 模块没有安装，开始安装..."
+        check_root
+        pip install psutil
+        if [ -z $(pip list | grep -o 'psutil') ]; then
+            echo -e "python psutil 依赖安装失败，请检查！" && exit 1
+        else
+            echo -e "python psutil 依赖安装成功！"
+        fi
+    fi
+}
+
 # 安装环境
 install_u() {
   green "安装环境..."
   yum -y install epel-release
-  yum -y install python-pip
-  yum -y install gcc
+#  yum -y install python-pip
+#  yum -y install gcc
   yum -y install python-devel
+#  pip install psutil
   green "环境安装成功"
 }
 
