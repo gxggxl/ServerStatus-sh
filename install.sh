@@ -38,7 +38,7 @@ check_root() {
 check_sys() {
   if [[ -f /etc/redhat-release ]]; then
     release="centos"
-  elif [ ${IS_MACOS} -eq 1 ]; then
+  elif [ "${IS_MACOS}" -eq 1 ]; then
     release="macos"
   elif cat /etc/issue | grep -q -E -i "debian"; then
     release="debian"
@@ -57,7 +57,7 @@ check_sys() {
 
 #检查 gcc 依赖
 check_gcc_installed_status() {
-  if [ -z $(command -v gcc) ]; then
+  if [ -z "$(command -v gcc)" ]; then
     echo -e "gcc 依赖没有安装，开始安装..."
     check_root
     if [[ ${release} == "centos" ]]; then
@@ -67,7 +67,7 @@ check_gcc_installed_status() {
     else
       apt-get update && apt-get install gcc -y
     fi
-    if [ -z $(command -v gcc) ]; then
+    if [ -z "$(command -v gcc)" ]; then
       echo -e "gcc 依赖安装失败，请检查！" && exit 1
     else
       echo -e "gcc 依赖安装成功！"
@@ -77,7 +77,7 @@ check_gcc_installed_status() {
 
 #检查 python-pip 依赖
 check_pip_installed_status() {
-  if [ -z $(command -v pip) ]; then
+  if [ -z "$(command -v pip)" ]; then
     echo -e "python-pip 依赖没有安装，开始安装..."
     if [[ ${release} == "centos" ]]; then
       yum install python-pip -y
@@ -86,7 +86,7 @@ check_pip_installed_status() {
     else
       apt-get install python-pip -y
     fi
-    if [ -z $(command -v pip) ]; then
+    if [ -z "$(command -v pip)" ]; then
       echo -e "python-pip 依赖安装失败，请检查！" && exit 1
     else
       echo -e "python-pip 依赖安装成功！"
@@ -96,10 +96,10 @@ check_pip_installed_status() {
 
 #检查 python psutil 模块
 check_python_psutil_installed_status() {
-  if [ -z $(pip list | grep -o 'psutil') ]; then
+  if [ -z "$(pip list | grep -o 'psutil')" ]; then
     echo -e "python psutil 模块没有安装，开始安装..."
     pip install psutil
-    if [ -z $(pip list | grep -o 'psutil') ]; then
+    if [ -z "$(pip list | grep -o 'psutil')" ]; then
       echo -e "python psutil 依赖安装失败，请检查！" && exit 1
     else
       echo -e "python psutil 依赖安装成功！"
@@ -140,7 +140,7 @@ EOF
   green "服务端安装成功"
   yellow "安装服务端时，默认安装客户端"
   printf "默认安装:y/n:"
-  read -e cccc
+  read -e -r cccc
   if [[ $cccc == "y" ]] || [[ $cccc == "" ]]; then
     install_client
   else
@@ -153,10 +153,8 @@ EOF
 install_client() {
   wget -P /root/ServerStatus https://raw.githubusercontent.com/gxggxl/ServerStatus-sh/master/clients/client-linux.py
   chmod 755 /root/ServerStatus/client-linux.py
-  # shellcheck disable=SC2162
-  read -e -p "请输入服务端IP地址:" server
-  # shellcheck disable=SC2162
-  read -e -p "请输入用户名:" user
+  read -e -p -r "请输入服务端IP地址:" server
+  read -e -p -r "请输入用户名:" user
   cat <<EOF >>/etc/crontab
 #ServerStatus-client Start
 @reboot root /root/ServerStatus/client-linux.py SERVER=$server USER=$user
@@ -196,8 +194,7 @@ $(red " 3)卸载服户端")
 $(red " 4)卸载客户端")
 $(yellow " 5)退出")
 EOF
-  # shellcheck disable=SC2162
-  read -p "请输入对应选项的数字：" numa
+  read -p -r "请输入对应选项的数字：" numa
   case $numa in
   1)
     echo "安装服务端!"
