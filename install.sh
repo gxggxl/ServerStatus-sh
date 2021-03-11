@@ -25,96 +25,93 @@ blue() { #蓝色
 
 #检查账户权限
 check_root() {
-    if [ 0 == $UID ]; then
-        echo -e "当前用户是 ROOT 用户，可以继续操作" && sleep 1
-    else
-        echo -e "当前非 ROOT 账号(或没有 ROOT 权限)，无法继续操作，请更换 ROOT 账号或使用 su命令获取临时 ROOT 权限" && exit 1
-    fi
+  if [ 0 == $UID ]; then
+    echo -e "当前用户是 ROOT 用户，可以继续操作" && sleep 1
+  else
+    echo -e "当前非 ROOT 账号(或没有 ROOT 权限)，无法继续操作，请更换 ROOT 账号或使用 su命令获取临时 ROOT 权限" && exit 1
+  fi
 }
 
 #检查系统
 check_sys() {
-    if [[ -f /etc/redhat-release ]]; then
-        release="centos"
-    elif [ ${IS_MACOS} -eq 1 ]; then
-        release="macos"
-    elif cat /etc/issue | grep -q -E -i "debian"; then
-        release="debian"
-    elif cat /etc/issue | grep -q -E -i "ubuntu"; then
-        release="ubuntu"
-    elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
-        release="centos"
-    elif cat /proc/version | grep -q -E -i "debian"; then
-        release="debian"
-    elif cat /proc/version | grep -q -E -i "ubuntu"; then
-        release="ubuntu"
-    elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
-        release="centos"
-    fi
+  if [[ -f /etc/redhat-release ]]; then
+    release="centos"
+  elif [ ${IS_MACOS} -eq 1 ]; then
+    release="macos"
+  elif cat /etc/issue | grep -q -E -i "debian"; then
+    release="debian"
+  elif cat /etc/issue | grep -q -E -i "ubuntu"; then
+    release="ubuntu"
+  elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
+    release="centos"
+  elif cat /proc/version | grep -q -E -i "debian"; then
+    release="debian"
+  elif cat /proc/version | grep -q -E -i "ubuntu"; then
+    release="ubuntu"
+  elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
+    release="centos"
+  fi
 }
 
 #检查 gcc 依赖
 check_gcc_installed_status() {
-    if [ -z $(command -v gcc) ]; then
-        echo -e "gcc 依赖没有安装，开始安装..."
-        check_root
-        if [[ ${release} == "centos" ]]; then
-            yum update && yum install gcc -y
-        elif [[ ${release} == "macos" ]]; then
-            brew install gcc
-        else
-            apt-get update && apt-get install gcc -y
-        fi
-        if [ -z $(command -v gcc) ]; then
-            echo -e "gcc 依赖安装失败，请检查！" && exit 1
-        else
-            echo -e "gcc 依赖安装成功！"
-        fi
+  if [ -z $(command -v gcc) ]; then
+    echo -e "gcc 依赖没有安装，开始安装..."
+    check_root
+    if [[ ${release} == "centos" ]]; then
+      yum update && yum install gcc -y
+    elif [[ ${release} == "macos" ]]; then
+      brew install gcc
+    else
+      apt-get update && apt-get install gcc -y
     fi
+    if [ -z $(command -v gcc) ]; then
+      echo -e "gcc 依赖安装失败，请检查！" && exit 1
+    else
+      echo -e "gcc 依赖安装成功！"
+    fi
+  fi
 }
 
 #检查 python-pip 依赖
 check_pip_installed_status() {
-    if [ -z $(command -v pip) ]; then
-        echo -e "python-pip 依赖没有安装，开始安装..."
-        check_root
-        if [[ ${release} == "centos" ]]; then
-            yum update && yum install python-pip -y
-        elif [[ ${release} == "macos" ]]; then
-            brew install python-pip
-        else
-            apt-get update && apt-get install python-pip -y
-        fi
-        if [ -z $(command -v pip) ]; then
-            echo -e "python-pip 依赖安装失败，请检查！" && exit 1
-        else
-            echo -e "python-pip 依赖安装成功！"
-        fi
+  if [ -z $(command -v pip) ]; then
+    echo -e "python-pip 依赖没有安装，开始安装..."
+    check_root
+    if [[ ${release} == "centos" ]]; then
+      yum update && yum install python-pip -y
+    elif [[ ${release} == "macos" ]]; then
+      brew install python-pip
+    else
+      apt-get update && apt-get install python-pip -y
     fi
+    if [ -z $(command -v pip) ]; then
+      echo -e "python-pip 依赖安装失败，请检查！" && exit 1
+    else
+      echo -e "python-pip 依赖安装成功！"
+    fi
+  fi
 }
 
 #检查 python psutil 模块
 check_python_psutil_installed_status() {
+  if [ -z $(pip list | grep -o 'psutil') ]; then
+    echo -e "python psutil 模块没有安装，开始安装..."
+    check_root
+    pip install psutil
     if [ -z $(pip list | grep -o 'psutil') ]; then
-        echo -e "python psutil 模块没有安装，开始安装..."
-        check_root
-        pip install psutil
-        if [ -z $(pip list | grep -o 'psutil') ]; then
-            echo -e "python psutil 依赖安装失败，请检查！" && exit 1
-        else
-            echo -e "python psutil 依赖安装成功！"
-        fi
+      echo -e "python psutil 依赖安装失败，请检查！" && exit 1
+    else
+      echo -e "python psutil 依赖安装成功！"
     fi
+  fi
 }
 
 # 安装环境
 install_u() {
   green "安装环境..."
   yum -y install epel-release
-#  yum -y install python-pip
-#  yum -y install gcc
   yum -y install python-devel
-#  pip install psutil
   green "环境安装成功"
 }
 
@@ -123,8 +120,8 @@ install_u() {
 
 # 安装服务端
 install_server() {
-#  install_u
-#  git clone https://github.com/gxggxl/ServerStatus-sh.git ServerStatus
+  #  install_u
+  #  git clone https://github.com/gxggxl/ServerStatus-sh.git ServerStatus
   git clone https://gitee.com/gxggxl/ServerStatus-sh.git ServerStatus
   cp -rf root/ServerStatus/web/* /www/wwwroot/info.gxusb.com
   cd ServerStatus/server || exit
@@ -149,8 +146,8 @@ EOF
   read -e cccc
   if [[ $cccc == "y" ]] || [[ $cccc == "" ]]; then
     install_client
-    else
-      exit
+  else
+    exit
   fi
   exit
 }
@@ -168,7 +165,7 @@ install_client() {
 @reboot root /root/ServerStatus/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
 EOF
-/root/ServerStatus/client-linux.py SERVER=$server USER=$user
+  /root/ServerStatus/client-linux.py SERVER=$server USER=$user
 }
 
 # 卸载服务端
