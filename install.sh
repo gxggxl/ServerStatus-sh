@@ -151,8 +151,8 @@ EOF
 install_client() {
   wget "https://raw.githubusercontent.com/gxggxl/ServerStatus-sh/master/clients/client-linux.py" -O "/root/ServerStatus/clients/client-linux.py"
   chmod 755 /root/ServerStatus/client-linux.py
-  read -e -p -r "请输入服务端IP地址:" server
-  read -e -p -r "请输入用户名:" user
+  read -e -r -p "请输入服务端IP地址:" server
+  read -e -r -p "请输入用户名:" user
   cat <<EOF >>/etc/crontab
 #ServerStatus-client Start
 @reboot root /root/ServerStatus/client-linux.py SERVER=$server USER=$user
@@ -192,7 +192,7 @@ $(red " 3)卸载服户端")
 $(red " 4)卸载客户端")
 $(yellow " 5)退出")
 EOF
-  read -p -r "请输入对应选项的数字：" numa
+  read -r -p "请输入对应选项的数字：" numa
   case $numa in
   1)
     echo "安装服务端!"
