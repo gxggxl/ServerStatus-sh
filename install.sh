@@ -130,11 +130,11 @@ install_server() {
   ./sergate --config=config.json --web-dir=/www/wwwroot/info.gxusb.com
 
   # shellcheck disable=SC2242
-  path=$(cd "$(dirname "$0")" || exit pwd)
+  #  path=$(cd "$(dirname "$0")" || exit pwd)
   green "将ServerStatus服务端，添加到crontab任务列表..."
   cat <<EOF >>/etc/crontab
 #ServerStatus-server Start
-@reboot root $path/sergate --config=$path/config.json --web-dir=/www/wwwroot/info.gxusb.com
+@reboot root /root/ServerStatus/server/sergate --config=/root/ServerStatus/server/sergate/config.json --web-dir=/www/wwwroot/info.gxusb.com
 #ServerStatus-server End
 EOF
 
@@ -153,15 +153,15 @@ EOF
 # 安装客户端
 install_client() {
   wget "https://raw.githubusercontent.com/gxggxl/ServerStatus-sh/master/clients/client-linux.py" -O "/root/ServerStatus/clients/client-linux.py"
-  chmod 755 /root/ServerStatus/client-linux.py
+  chmod 700 /root/ServerStatus/clients/client-linux.py
   read -e -r -p "请输入服务端IP地址:" server
   read -e -r -p "请输入用户名:" user
   cat <<EOF >>/etc/crontab
 #ServerStatus-client Start
-@reboot root /root/ServerStatus/client-linux.py SERVER=$server USER=$user
+@reboot root /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
 EOF
-  #  /root/ServerStatus/client-linux.py SERVER=$server USER=$user
+  /root/ServerStatus/client-linux.py SERVER=$server USER=$user &
 }
 
 # 卸载服务端
