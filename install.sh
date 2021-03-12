@@ -127,6 +127,7 @@ install_server() {
   #  ./sergate &
 
   # 运行服务端
+  green "请按Ctrl+C继续"
   /root/ServerStatus/server/sergate --config=/root/ServerStatus/server/config.json --web-dir=/www/wwwroot/info.gxusb.com
 
   green "将ServerStatus服务端，添加到crontab任务列表..."
@@ -135,7 +136,7 @@ install_server() {
 @reboot root /root/ServerStatus/server/sergate --config=/root/ServerStatus/server/config.json --web-dir=/www/wwwroot/info.gxusb.com
 #ServerStatus-server End
 EOF
-
+  green "@reboot root /root/ServerStatus/server/sergate --config=/root/ServerStatus/server/config.json --web-dir=/www/wwwroot/info.gxusb.com \n已添加到/etc/crontabs"
   green "服务端安装成功"
 
   yellow "安装服务端时，默认安装客户端"
@@ -156,7 +157,8 @@ install_client() {
   read -e -r -p "请输入服务端IP地址:" server
   read -e -r -p "请输入用户名:" user
   # 后台运行
-  nohup python -u /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user >/root/client-linux.txt 2>&1 &
+  green "请手动运行客户端"
+  echo "nohup python /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user >/root/client-linux.txt 2>&1 &"
 
   yellow "将客户端设置跟随系统启动"
   cat <<EOF >>/etc/crontab
@@ -174,6 +176,9 @@ uninstall_server() {
   red "正在删除服务端网站文件..."
   rm -rfv /www/wwwroot/info.gxusb.com
   green "网站文件已删除"
+  red "正在删除服务端文件..."
+  rm -rfv /root/ServerStatus
+  green "服务端文件已删除"
 }
 
 # 卸载客户端
