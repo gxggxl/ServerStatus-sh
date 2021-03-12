@@ -127,7 +127,7 @@ install_server() {
   ./sergate &
 
   # 运行服务端
-  ./sergate --config=config.json --web-dir=/www/wwwroot/info.gxusb.com
+  /root/ServerStatus/server/sergate --config=/root/ServerStatus/server/config.json --web-dir=/www/wwwroot/info.gxusb.com
 
   green "将ServerStatus服务端，添加到crontab任务列表..."
   cat <<EOF >>/etc/crontab
@@ -159,7 +159,7 @@ install_client() {
 @reboot root /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
 EOF
-  /root/ServerStatus/clients/client-linux.py SERVER="$server" USER="$user" &
+  nohup python  /root/ServerStatus/clients/client-linux.py SERVER="$server" USER="$user" &
 }
 
 # 卸载服务端
