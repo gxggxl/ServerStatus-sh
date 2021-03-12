@@ -124,7 +124,7 @@ install_server() {
   cp -rf /root/ServerStatus/web/* /www/wwwroot/info.gxusb.com
   cd ServerStatus/server || exit
   make
-  ./sergate &
+  #  ./sergate &
 
   # 运行服务端
   /root/ServerStatus/server/sergate --config=/root/ServerStatus/server/config.json --web-dir=/www/wwwroot/info.gxusb.com
@@ -137,7 +137,7 @@ install_server() {
 EOF
 
   green "服务端安装成功"
-  sleep 3
+
   yellow "安装服务端时，默认安装客户端"
   printf "默认安装:y/n:"
   read -e -r cccc
@@ -160,7 +160,8 @@ install_client() {
 @reboot root /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
 EOF
-  nohup python  /root/ServerStatus/clients/client-linux.py SERVER="$server" USER="$user" &
+  # 后台运行
+  nohup python -u /root/ServerStatus/clients/client-linux.py SERVER="$server" USER="$user" >root/client-linux.txt 2>&1 &
 }
 
 # 卸载服务端
