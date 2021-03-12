@@ -168,7 +168,7 @@ uninstall_server() {
   cp /etc/crontab crontab.backup
   sed '/^#ServerStatus-server/,/^#ServerStatus-server End/d' crontab.backup >/etc/crontab
   red "正在删除服务端网站文件..."
-  rm -rfv /home/wwwroot/default/*
+  rm -rfv /www/wwwroot/info.gxusb.com
   green "网站文件已删除"
 }
 
