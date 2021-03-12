@@ -152,6 +152,8 @@ EOF
 
 # 安装客户端
 install_client() {
+  mkdir ServerStatus
+  mkdir clients
   wget -O "/root/ServerStatus/clients/client-linux.py" "https://raw.githubusercontent.com/gxggxl/ServerStatus-sh/master/clients/client-linux.py"
   chmod 700 /root/ServerStatus/clients/client-linux.py
   read -e -r -p "请输入服务端IP地址:" server
