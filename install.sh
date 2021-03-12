@@ -129,12 +129,9 @@ install_server() {
   # 运行服务端
   ./sergate --config=config.json --web-dir=/www/wwwroot/info.gxusb.com
 
-  # shellcheck disable=SC2242
-  #  path=$(cd "$(dirname "$0")" || exit pwd)
   green "将ServerStatus服务端，添加到crontab任务列表..."
   cat <<EOF >>/etc/crontab
 #ServerStatus-server Start
-
 @reboot root /root/ServerStatus/server/sergate --config=/root/ServerStatus/server/config.json --web-dir=/www/wwwroot/info.gxusb.com
 #ServerStatus-server End
 EOF
