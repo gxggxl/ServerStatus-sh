@@ -161,7 +161,7 @@ install_client() {
 #ServerStatus-client End
 EOF
   # 后台运行
-  nohup python -u /root/ServerStatus/clients/client-linux.py SERVER="$server" USER="$user" >root/client-linux.txt 2>&1 &
+  nohup python -u /root/ServerStatus/clients/client-linux.py SERVER="$server" USER="$user" >/root/client-linux.txt 2>&1 &
 }
 
 # 卸载服务端
