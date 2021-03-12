@@ -30,6 +30,17 @@
 
 # 自动部署：
 
+- 一键安装脚本
+
+Gitee源
+```bash
+wget -O "install.sh" "https://gitee.com/gxggxl/ServerStatus-sh/raw/master/install.sh" && chmod 700 install.sh && ./install.sh
+```
+Github源
+```bash
+wget -O "install.sh" "https://raw.githubusercontent.com/gxggxl/ServerStatus-sh/master/install.sh" && chmod 700 install.sh && ./install.sh
+```
+
 【服务端】：
 ```bash
 wget https://raw.githubusercontent.com/cppla/ServerStatus/master/autodeploy/config.json

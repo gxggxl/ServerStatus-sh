@@ -149,7 +149,7 @@ EOF
 
 # 安装客户端
 install_client() {
-  wget -P /root/ServerStatus https://raw.githubusercontent.com/gxggxl/ServerStatus-sh/master/clients/client-linux.py
+  wget "https://raw.githubusercontent.com/gxggxl/ServerStatus-sh/master/clients/client-linux.py" -O "/root/ServerStatus/clients/client-linux.py"
   chmod 755 /root/ServerStatus/client-linux.py
   read -e -p -r "请输入服务端IP地址:" server
   read -e -p -r "请输入用户名:" user
