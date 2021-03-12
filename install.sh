@@ -108,6 +108,9 @@ check_python_psutil_installed_status() {
 # 安装环境
 install_u() {
   green "安装环境..."
+  check_gcc_installed_status
+  check_pip_installed_status
+  check_python_psutil_installed_status
   yum -y install epel-release
   yum -y install python-devel
   green "环境安装成功"
@@ -115,7 +118,7 @@ install_u() {
 
 # 安装服务端
 install_server() {
-  #  install_u
+  install_u
   #  git clone https://github.com/gxggxl/ServerStatus-sh.git ServerStatus
   git clone https://gitee.com/gxggxl/ServerStatus-sh.git ServerStatus
   cp -rf root/ServerStatus/web/* /www/wwwroot/info.gxusb.com
