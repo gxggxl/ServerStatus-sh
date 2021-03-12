@@ -1,4 +1,11 @@
 #!/bin/bash
+# -*- coding: utf-8 -*-
+# @Software     : PyCharm
+# @Author       : gxggxl
+# @File         : install.sh
+# @Time         : 2021/3/10 21:03
+# @Project Name : ServerStatus-sh
+
 #获取路径
 #path=$(cd "$(dirname "$0")" || exit pwd)
 
@@ -152,8 +159,21 @@ EOF
 
 # 安装客户端
 install_client() {
-  mkdir ServerStatus
-  mkdir clients
+  if [ -z "$(ls | grep -o "ServerStatus")" ]; then
+    echo "mkdir ServerStatus"
+    mkdir ServerStatus
+  else
+    echo "目录已存在"
+  fi
+  cd ServerStatus || exit
+  if [ -z "$(ls | grep -o "clients")" ]; then
+    echo "mkdir clients"
+    mkdir clients
+  else
+    echo "目录已存在"
+  fi
+  cd ../
+
   wget -O "/root/ServerStatus/clients/client-linux.py" "https://raw.githubusercontent.com/gxggxl/ServerStatus-sh/master/clients/client-linux.py"
   chmod 700 /root/ServerStatus/clients/client-linux.py
   read -e -r -p "请输入服务端IP地址:" server
