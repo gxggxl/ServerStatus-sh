@@ -155,13 +155,16 @@ install_client() {
   chmod 700 /root/ServerStatus/clients/client-linux.py
   read -e -r -p "请输入服务端IP地址:" server
   read -e -r -p "请输入用户名:" user
+  # 后台运行
+  nohup python -u /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user >/root/client-linux.txt 2>&1 &
+
+  yellow "将客户端设置跟随系统启动"
   cat <<EOF >>/etc/crontab
 #ServerStatus-client Start
 @reboot root /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
 EOF
-  # 后台运行
-  nohup python -u /root/ServerStatus/clients/client-linux.py SERVER="$server" USER="$user" >/root/client-linux.txt 2>&1 &
+  green "@reboot root /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user \n已添加到/etc/crontabs"
 }
 
 # 卸载服务端
@@ -178,7 +181,7 @@ uninstall_client() {
   cp /etc/crontab crontab.backup
   sed '/^#ServerStatus-client/,/^#ServerStatus-client End/d' crontab.backup >/etc/crontab
   red "正在删除客户端文件..."
-  rm -rfv /root/ServerStatus
+  rm -rfv /root/ServerStatus/clients
   green "客户端文件已删除"
 }
 
