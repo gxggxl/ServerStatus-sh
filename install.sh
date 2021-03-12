@@ -23,8 +23,6 @@ blue() { #蓝色
   echo -e "\\033[34;1m${*}\\033[0m"
 }
 
-#red $(command -v python)
-
 #检查账户权限
 check_root() {
   if [ 0 == $UID ]; then
@@ -55,7 +53,7 @@ check_sys() {
   fi
 }
 
-#检查 gcc 依赖
+# 检查 gcc 依赖
 check_gcc_installed_status() {
   if [ -z "$(command -v gcc)" ]; then
     echo -e "gcc 依赖没有安装，开始安装..."
@@ -75,7 +73,7 @@ check_gcc_installed_status() {
   fi
 }
 
-#检查 python-pip 依赖
+# 检查 python-pip 依赖
 check_pip_installed_status() {
   if [ -z "$(command -v pip)" ]; then
     echo -e "python-pip 依赖没有安装，开始安装..."
@@ -94,7 +92,7 @@ check_pip_installed_status() {
   fi
 }
 
-#检查 python psutil 模块
+# 检查 python psutil 模块
 check_python_psutil_installed_status() {
   if [ -z "$(pip list | grep -o 'psutil')" ]; then
     echo -e "python psutil 模块没有安装，开始安装..."
@@ -123,9 +121,9 @@ install_server() {
   cp -rf root/ServerStatus/web/* /www/wwwroot/info.gxusb.com
   cd ServerStatus/server || exit
   make
-  ./sergate
+  ./sergate &
 
-  #运行服务端
+  # 运行服务端
   ./sergate --config=config.json --web-dir=/www/wwwroot/info.gxusb.com
 
   # shellcheck disable=SC2242
