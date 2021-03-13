@@ -9,8 +9,9 @@ maybe better by youself
 
 import os
 import sys
-import requests
 import time
+
+import requests
 from prettytable import PrettyTable
 
 # todo: 程序在非gui环境下目前有闪屏的bug
