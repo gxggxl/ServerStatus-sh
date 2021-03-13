@@ -143,7 +143,7 @@ install_server() {
 @reboot root /root/ServerStatus/server/sergate --config=/root/ServerStatus/server/config.json --web-dir=/www/wwwroot/info.gxusb.com
 #ServerStatus-server End
 EOF
-  green "@reboot root /root/ServerStatus/server/sergate --config=/root/ServerStatus/server/config.json --web-dir=/www/wwwroot/info.gxusb.com \n已添加到/etc/crontabs"
+  green "@reboot root /root/ServerStatus/server/sergate --config=/root/ServerStatus/server/config.json --web-dir=/www/wwwroot/info.gxusb.com \n已添加到/etc/crontab"
   green "服务端安装成功"
 
   yellow "安装服务端时，默认安装客户端"
@@ -188,7 +188,7 @@ install_client() {
 @reboot root /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
 EOF
-  green "@reboot root /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user \n已添加到/etc/crontabs"
+  green "@reboot root /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user \n已添加到/etc/crontab"
 }
 
 # 卸载服务端
