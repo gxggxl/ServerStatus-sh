@@ -13,7 +13,7 @@ body { background: #ebebeb url('../img/light.png'); }
 .table-hover > tbody > tr:hover > td { background: #E6E6E6; }
 tr.even.expandRow > :hover { background: #F9F9F9 !important; }
 tr.odd.expandRow > :hover { background: #FFF !important; }
-.expandRow > td { padding: 0 !important; border-top: 0px !important; }
+.expandRow > td { padding: 0 !important; border-top: 0 !important; }
 #cpu, #ram, #hdd, #network { min-width: 55px; max-width: 100px; }
 #ping { min-width: 55px; max-width: 130px; }
 

@@ -3,9 +3,9 @@
 # Update by : https://github.com/cppla/ServerStatus
 # 支持Python版本：2.7 to 3.5; requirements.txt: requests, PrettyTable
 # 时间: 20180828
-'''
+"""
 maybe better by youself
-'''
+"""
 
 import os
 import sys
