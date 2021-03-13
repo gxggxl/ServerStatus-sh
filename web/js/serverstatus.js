@@ -301,7 +301,7 @@ function uptime() {
 					ExpandRow[0].children["expand_custom"].innerHTML = ""
 				}
 			}
-		};
+		}
 
 		d = new Date(result.updated*1000);
 		error = 0;
