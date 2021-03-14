@@ -3,13 +3,14 @@
 # @Software     : PyCharm
 # @Author       : gxggxl
 # @File         : install.sh
-# @Time         : 2021/3/10 21:03
+# @Time         : 2021/3/10 21:00
 # @Project Name : ServerStatus-sh
 
 #获取路径
 #path=$(cd "$(dirname "$0")" || exit pwd)
 
 # 功能性函数：
+
 # 定义几个颜色
 purple() { #基佬紫
   echo -e "\\033[35;1m${*}\\033[0m"
@@ -81,7 +82,7 @@ check_gcc_installed_status() {
 }
 
 # 检查 python-pip 依赖
-check_pip_installed_status() {
+check_python_pip_installed_status() {
   if [ -z "$(command -v pip)" ]; then
     echo -e "python-pip 依赖没有安装，开始安装..."
     if [[ ${release} == "centos" ]]; then
@@ -116,7 +117,7 @@ check_python_psutil_installed_status() {
 install_u() {
   green "安装环境..."
   check_gcc_installed_status
-  check_pip_installed_status
+  check_python_pip_installed_status
   check_python_psutil_installed_status
   yum -y install epel-release
   yum -y install python-devel
