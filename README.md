@@ -11,7 +11,7 @@
 
 # 目录介绍：
 
-* autodeploy    自动部署
+* autodeploy    docker自动部署
 * clients       客户端文件
 * server        服务端文件
 * web           网站文件
@@ -41,34 +41,39 @@ Github源
 wget -O "install.sh" "https://raw.githubusercontent.com/gxggxl/ServerStatus-sh/master/install.sh" && chmod 700 install.sh && ./install.sh
 ```
 
+- docker容器
+
 【服务端】：
 ```bash
 wget https://raw.githubusercontent.com/cppla/ServerStatus/master/autodeploy/config.json
 docker run -d --restart=always --name=serverstatus -v {$path}/config.json:/ServerStatus/server/config.json -p {$port}:80 -p {$port}:35601 cppla/serverstatus
-
+```
 eg:
+```bash
 docker run -d --restart=always --name=serverstatus -v ~/config.json:/ServerStatus/server/config.json -p 80:80 -p 35601:35601 cppla/serverstatus
 ```
+
 
 【客户端】：
 ```bash
 wget --no-check-certificate -qO client-linux.py 'https://raw.githubusercontent.com/cppla/ServerStatus/master/clients/client-linux.py' && nohup python client-linux.py SERVER={$SERVER} USER={$USER} PASSWORD={$PASSWORD} >/dev/null 2>&1 &
-
+```
 eg:
+```bash
 wget --no-check-certificate -qO client-linux.py 'https://raw.githubusercontent.com/cppla/ServerStatus/master/clients/client-linux.py' && nohup python client-linux.py SERVER=45.79.67.132 USER=s04  >/dev/null 2>&1 &
 ```
 
 # 手动安装教程：     
    
 【克隆代码】:
-```
+```bash
 git clone https://github.com/cppla/ServerStatus.git
 ```
 
 【服务端配置】（服务端程序在ServerStatus/web下）:  
           
 一、生成服务端程序              
-```
+```bash
 cd ServerStatus/server
 make
 ./sergate
