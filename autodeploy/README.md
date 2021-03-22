@@ -13,8 +13,8 @@ docker run -d --restart=always --name=sss -v {$path}/config.json:/ServerStatus/s
 wget --no-check-certificate -qO client-linux.py 'https://raw.githubusercontent.com/cppla/ServerStatus/master/clients/client-linux.py' && nohup python client-linux.py SERVER={$SERVER} USER={$USER} PASSWORD={$PASSWORD} >/dev/null 2>&1 &
 ```
 
-
 附: docker安装
+
 ```bash
 curl -sSL https://get.docker.com/ | sh
 ```
