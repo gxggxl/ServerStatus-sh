@@ -113,8 +113,8 @@ check_python_psutil_installed_status() {
   fi
 }
 
-# 安装环境
-install_u() {
+# 安装服务端环境
+install_server_u() {
   green "安装环境..."
   check_gcc_installed_status
   check_python_pip_installed_status
@@ -124,16 +124,25 @@ install_u() {
   green "环境安装成功"
 }
 
+# 安装客户端环境
+install_client_u() {
+  green "安装环境..."
+  check_python_pip_installed_status
+  check_python_psutil_installed_status
+  yum -y install epel-release
+  yum -y install python-devel
+  green "环境安装成功"
+}
+
 # 安装服务端
 install_server() {
-  install_u
+  install_server_u
   #  git clone https://github.com/gxggxl/ServerStatus-sh.git ServerStatus
   git clone https://gitee.com/gxggxl/ServerStatus-sh.git ServerStatus
   cp -rf /root/ServerStatus/web/* /www/wwwroot/info.gxusb.com
   cd ServerStatus/server || exit
   make
   #  ./sergate &
-
   # 运行服务端
   green "请按Ctrl+C继续"
   /root/ServerStatus/server/sergate --config=/root/ServerStatus/server/config.json --web-dir=/www/wwwroot/info.gxusb.com
@@ -160,6 +169,7 @@ EOF
 
 # 安装客户端
 install_client() {
+  install_client_u
   if [ -z "$(ls | grep -o "ServerStatus")" ]; then
     echo "mkdir ServerStatus"
     mkdir ServerStatus
