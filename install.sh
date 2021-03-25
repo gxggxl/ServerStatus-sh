@@ -127,6 +127,7 @@ install_server_u() {
 # 安装客户端环境
 install_client_u() {
   green "安装客户端环境..."
+  check_gcc_installed_status
   yum -y install epel-release
   yum -y install python-devel
   check_python_pip_installed_status
