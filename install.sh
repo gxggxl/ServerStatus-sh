@@ -170,7 +170,7 @@ EOF
 
 # 安装客户端
 install_client() {
-  install_client_u
+#  install_client_u
   if [ -z "$(ls | grep -o "ServerStatus")" ]; then
     echo "mkdir ServerStatus"
     mkdir ServerStatus
