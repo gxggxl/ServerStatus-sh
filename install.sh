@@ -115,22 +115,22 @@ check_python_psutil_installed_status() {
 
 # 安装服务端环境
 install_server_u() {
-  green "安装环境..."
+  green "安装服务端环境..."
+  yum -y install epel-release
+  yum -y install python-devel
   check_gcc_installed_status
   check_python_pip_installed_status
   check_python_psutil_installed_status
-  yum -y install epel-release
-  yum -y install python-devel
   green "环境安装成功"
 }
 
 # 安装客户端环境
 install_client_u() {
-  green "安装环境..."
-  check_python_pip_installed_status
-  check_python_psutil_installed_status
+  green "安装客户端环境..."
   yum -y install epel-release
   yum -y install python-devel
+  check_python_pip_installed_status
+  check_python_psutil_installed_status
   green "环境安装成功"
 }
 
