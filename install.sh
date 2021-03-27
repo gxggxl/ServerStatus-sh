@@ -192,15 +192,15 @@ install_client() {
   read -e -r -p "请输入用户名:" user
   # 后台运行
   green "请手动运行客户端"
-  echo "nohup python /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user >/root/client-linux.txt 2>&1 &"
+  echo "nohup python3 /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user >/root/client-linux.txt 2>&1 &"
 
   yellow "将客户端设置跟随系统启动"
   cat <<EOF >>/etc/crontab
 #ServerStatus-client Start
-@reboot root /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user
+@reboot root python3 /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user
 #ServerStatus-client End
 EOF
-  green "@reboot root /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user \n已添加到/etc/crontab"
+  green "@reboot root python3 /root/ServerStatus/clients/client-linux.py SERVER=$server USER=$user \n已添加到/etc/crontab"
 }
 
 # 卸载服务端
