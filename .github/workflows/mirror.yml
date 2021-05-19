@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v1
       - name: 'Mirror to Gitlab'
         uses: pixta-dev/repository-mirroring-action@v1
+        needs: Mirror_to_Gitee
         with:
           target_repo_url:
             # Gitlab 仓库地址
