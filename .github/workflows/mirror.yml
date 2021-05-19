@@ -12,6 +12,22 @@ jobs:
         uses: pixta-dev/repository-mirroring-action@v1
         with:
           target_repo_url:
+            # Gitee 仓库地址
             git@gitee.com:gxggxl/ServerStatus-sh.git
           ssh_private_key:
+            # Gitee ssh 私钥
             ${{ secrets.GITEE_KEY }}
+  Mirror_to_Gitlab:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v1
+      - name: 'Mirror to Gitlab'
+        uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            # Gitlab 仓库地址
+            git@gitlab.com:tsund/test.git
+          ssh_private_key:
+            # Gitlab ssh 私钥
+            ${{ secrets.GITLAB_KEY }}
