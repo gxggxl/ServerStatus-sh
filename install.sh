@@ -44,22 +44,19 @@ check_root() {
 
 #检查系统
 check_sys() {
-  if [[ -f /etc/redhat-release ]]; then
-    release="centos"
-  elif [ "${IS_MACOS}" -eq 1 ]; then
+  release=$(uname -a)
+  strX="当前的操作系统是"
+  if [[ $release =~ "Darwin" ]]; then
+    echo "$strX MacOS"
     release="macos"
-  elif cat /etc/issue | grep -q -E -i "debian"; then
-    release="debian"
-  elif cat /etc/issue | grep -q -E -i "ubuntu"; then
-    release="ubuntu"
-  elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
+  elif [[ $release =~ "centos" ]]; then
+    echo "$strX centos"
     release="centos"
-  elif cat /proc/version | grep -q -E -i "debian"; then
-    release="debian"
-  elif cat /proc/version | grep -q -E -i "ubuntu"; then
+  elif [[ $release =~ "ubuntu" ]]; then
+    echo "$strX ubuntu"
     release="ubuntu"
-  elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
-    release="centos"
+  else
+    echo "$release"
   fi
 }
 
@@ -104,10 +101,10 @@ check_python_pip_installed_status() {
 
 # 检查 python psutil 模块
 check_python_psutil_installed_status() {
-  if [ -z "$(pip list | grep -o 'psutil')" ]; then
+  if pip list | grep -o 'psutil'; then
     echo -e "python psutil 模块没有安装，开始安装..."
     pip install psutil
-    if [ -z "$(pip list | grep -o 'psutil')" ]; then
+    if pip list | grep -o 'psutil'; then
       echo -e "python psutil 依赖安装失败，请检查！" && exit 1
     else
       echo -e "python psutil 依赖安装成功！"
@@ -173,14 +170,14 @@ EOF
 # 安装客户端
 install_client() {
   #  install_client_u
-  if [ -z "$(ls | grep -o "ServerStatus")" ]; then
+  if ls ./*ServerStatus*; then
     echo "mkdir ServerStatus"
     mkdir ServerStatus
   else
     echo "目录已存在"
   fi
   cd ServerStatus || exit
-  if [ -z "$(ls | grep -o "clients")" ]; then
+  if ls ./*clients*; then
     echo "mkdir clients"
     mkdir clients
   else
@@ -207,8 +204,7 @@ EOF
 
 # 卸载服务端
 uninstall_server() {
-  cp /etc/crontab crontab.backup
-  sed '/^#ServerStatus-server/,/^#ServerStatus-server End/d' crontab.backup >/etc/crontab
+  grep /etc/crontab | sed '/^#ServerStatus-server/,/^#ServerStatus-server End/d' >tmp && mv tmp /etc/crontab
   red "正在删除服务端网站文件..."
   rm -rfv /www/wwwroot/info.gxusb.com
   green "网站文件已删除"
@@ -219,8 +215,7 @@ uninstall_server() {
 
 # 卸载客户端
 uninstall_client() {
-  cp /etc/crontab crontab.backup
-  sed '/^#ServerStatus-client/,/^#ServerStatus-client End/d' crontab.backup >/etc/crontab
+  grep /etc/crontab | sed '/^#ServerStatus-client/,/^#ServerStatus-client End/d' >tmp && mv tmp /etc/crontab
   red "正在删除客户端文件..."
   rm -rfv /root/ServerStatus/clients
   green "客户端文件已删除"
@@ -240,7 +235,7 @@ $(red " 4)卸载客户端")
 $(yellow " 5)退出")
 EOF
 
-  if (($me == 1)); then
+  if ((me == 1)); then
     red "输入无效，请输入对应选项的数字："
   else
     echo "请输入对应选项的数字："
@@ -272,6 +267,7 @@ EOF
   *)
     me=1
     menu
+    ;;
   esac
 }
 
