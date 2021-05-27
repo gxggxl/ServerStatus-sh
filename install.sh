@@ -9,6 +9,8 @@
 #获取路径
 #path=$(cd "$(dirname "$0")" || exit pwd)
 
+me=0
+
 # 功能性函数：
 
 # 定义几个颜色
@@ -170,7 +172,7 @@ EOF
 
 # 安装客户端
 install_client() {
-#  install_client_u
+  #  install_client_u
   if [ -z "$(ls | grep -o "ServerStatus")" ]; then
     echo "mkdir ServerStatus"
     mkdir ServerStatus
@@ -237,7 +239,15 @@ $(red " 3)卸载服户端")
 $(red " 4)卸载客户端")
 $(yellow " 5)退出")
 EOF
-  read -r -e -p "请输入对应选项的数字：" numa
+
+  if (($me == 1)); then
+    red "输入无效，请输入对应选项的数字："
+  else
+    echo "请输入对应选项的数字："
+  fi
+
+  read -r numa
+
   case $numa in
   1)
     echo "安装服务端!"
@@ -260,9 +270,8 @@ EOF
     exit
     ;;
   *)
-    red "输入无效，请重新输入选项"
+    me=1
     menu
-    ;;
   esac
 }
 
