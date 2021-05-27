@@ -35,7 +35,7 @@ blue() { #蓝色
 
 #检查账户权限
 function check_root() {
-  if [ $UID -ne 0 ] ; then
+  if [ $UID -ne 0 ]; then
     echo -e "当前用户是 ROOT 用户，可以继续操作" && sleep 1
   else
     echo -e "当前非 ROOT 账号(或没有 ROOT 权限)，无法继续操作，请更换 ROOT 账号或使用 su命令获取临时 ROOT 权限" && exit 1
@@ -204,7 +204,7 @@ EOF
 
 # 卸载服务端
 uninstall_server() {
-  grep /etc/crontab | sed '/^#ServerStatus-server/,/^#ServerStatus-server End/d' >tmp && mv tmp /etc/crontab
+  cat /etc/crontab | sed '/^#ServerStatus-server/,/^#ServerStatus-server End/d' >tmp && mv tmp /etc/crontab
   red "正在删除服务端网站文件..."
   rm -rfv /www/wwwroot/info.gxusb.com
   green "网站文件已删除"
@@ -215,14 +215,13 @@ uninstall_server() {
 
 # 卸载客户端
 uninstall_client() {
-  grep /etc/crontab | sed '/^#ServerStatus-client/,/^#ServerStatus-client End/d' >tmp && mv tmp /etc/crontab
+  cat /etc/crontab | sed '/^#ServerStatus-client/,/^#ServerStatus-client End/d' >tmp && mv tmp /etc/crontab
   red "正在删除客户端文件..."
   rm -rfv /root/ServerStatus/clients
   green "客户端文件已删除"
 }
 
 function menu() {
-  #  clear
   cat <<EOF
 ---------------------------------------------
 |**********   $(green "ServerStatus-sh")   ************|
