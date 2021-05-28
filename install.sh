@@ -204,7 +204,7 @@ EOF
 
 # 卸载服务端
 uninstall_server() {
-  cat /etc/crontab | sed '/^#ServerStatus-server/,/^#ServerStatus-server End/d' >tmp && mv tmp /etc/crontab
+  cat </etc/crontab | sed '/^#ServerStatus-server/,/^#ServerStatus-server End/d' >tmp && mv tmp /etc/crontab
   red "正在删除服务端网站文件..."
   rm -rfv /www/wwwroot/info.gxusb.com
   green "网站文件已删除"
@@ -215,7 +215,7 @@ uninstall_server() {
 
 # 卸载客户端
 uninstall_client() {
-  cat /etc/crontab | sed '/^#ServerStatus-client/,/^#ServerStatus-client End/d' >tmp && mv tmp /etc/crontab
+  cat </etc/crontab | sed '/^#ServerStatus-client/,/^#ServerStatus-client End/d' >tmp && mv tmp /etc/crontab
   red "正在删除客户端文件..."
   rm -rfv /root/ServerStatus/clients
   green "客户端文件已删除"
