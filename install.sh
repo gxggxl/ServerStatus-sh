@@ -7,7 +7,7 @@
 # @Project Name : ServerStatus-sh
 
 #获取路径
-#path=$(cd "$(dirname "$0")" || exit pwd)
+#path=$(cd "$(dirname "$0")" || exit;pwd)
 
 me=0
 
